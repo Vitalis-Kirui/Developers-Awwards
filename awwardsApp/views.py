@@ -49,3 +49,16 @@ def profile(request):
     current_user = request.user
     projects = Project.objects.filter(user=current_user.id).all
     return render(request, 'registration/profile.html', {"projects": projects})
+
+@login_required(login_url='/accounts/login/')
+def update_profile(request, id):
+    obj = get_object_or_404(Profile, user_id=id)
+    obj2 = get_object_or_404(User, id=id)
+    form = UpdateProfileForm(request.POST or None, request.FILES, instance=obj)
+    form2 = UpdateUserForm(request.POST or None, instance=obj2)
+    if form.is_valid() and form2.is_valid():
+        form.save()
+        form2.save()
+        return HttpResponseRedirect("/profile")
+
+    return render(request, "registration/update_profile.html", {"form": form, "form2": form2})
