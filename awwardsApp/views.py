@@ -9,6 +9,7 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 
+
 # Create your views here.
 def index(request):
     profile = Profile.objects.all()
