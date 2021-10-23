@@ -47,3 +47,29 @@ class Project(models.Model):
     @classmethod
     def search_project(cls, name):
         return cls.objects.filter(title__icontains=name).all()
+
+class Rates(models.Model):
+    RATE_CHOICES = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+        (6, '6'),
+        (7, '7'),
+        (8, '8'),
+        (9, '9'),
+        (10, '10'),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    project = models.ForeignKey(Project, null=True, on_delete=models.CASCADE)
+    design = models.IntegerField(choices=RATE_CHOICES, default=0, blank=False)
+    usability = models.IntegerField(
+        choices=RATE_CHOICES, default=0, blank=False)
+    content = models.IntegerField(choices=RATE_CHOICES, default=0, blank=False)
+    average = models.DecimalField(
+        default=1, blank=False, decimal_places=2, max_digits=40)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.project.title
