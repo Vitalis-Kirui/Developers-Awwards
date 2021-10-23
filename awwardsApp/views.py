@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http  import HttpResponse
 from .models import Profile, Project, Rates
 from django.contrib.auth.models import User
-from awwardsApp.forms import SignUpForm
+from awwardsApp.forms import SignUpForm, UpdateProfileForm, UpdateUserForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
@@ -62,3 +62,17 @@ def update_profile(request, id):
         return HttpResponseRedirect("/profile")
 
     return render(request, "registration/update_profile.html", {"form": form, "form2": form2})
+
+@login_required(login_url='/accounts/login')
+def post_project(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            post_project = form.save(commit=False)
+            post_project.user = current_user
+            post_project.save()
+            return redirect('index')
+    else:
+        form = ProjectForm()
+    return render(request, 'projects.html', {"form": form})
