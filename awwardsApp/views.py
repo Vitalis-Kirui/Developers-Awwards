@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http  import HttpResponse
 from .models import Profile, Project, Rates
 from django.contrib.auth.models import User
-from awwardsApp.forms import ProjectForm,SignUpForm, UpdateProfileForm, UpdateUserForm
+from awwardsApp.forms import ProjectForm,RatingsForm,SignUpForm, UpdateProfileForm, UpdateUserForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
@@ -76,3 +76,48 @@ def post_project(request):
     else:
         form = ProjectForm()
     return render(request, 'projects.html', {"form": form})
+
+@login_required(login_url='/accounts/login')
+def project(request, id):
+    project = Project.objects.get(id=id)
+    reviews = Rates.objects.all()
+    return render(request, 'viewProject.html', {"project": project, "reviews": reviews})
+
+@login_required(login_url='/accounts/login')
+def view_project(request, id):
+    project = Project.objects.get(id=id)
+    rate = Rates.objects.filter(user=request.user, project=project).first()
+    ratings = Rates.objects.all()
+    rating_status = None
+    if rate is None:
+        rating_status = False
+    else:
+        rating_status = True
+    current_user = request.user
+    if request.method == 'POST':
+        form = RatingsForm(request.POST)
+        if form.is_valid():
+            design = form.cleaned_data['design']
+            usability = form.cleaned_data['usability']
+            content = form.cleaned_data['content']
+            review = Rates()
+            review.project = project
+            review.user = current_user
+            review.design = design
+            review.usability = usability
+            review.content = content
+            review.average = (
+                review.design + review.usability + review.content)/3
+            review.save()
+            return HttpResponseRedirect(reverse('viewProject', args=(project.id,)))
+    else:
+        form = RatingsForm()
+    params = {
+        'project': project,
+        'form': form,
+        'rating_status': rating_status,
+        'reviews': ratings,
+        'ratings': rate
+
+    }
+    return render(request, 'viewProject.html', params)
