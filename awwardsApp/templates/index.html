@@ -1,17 +1,80 @@
 {%extends 'base.html'%}
 {% load bootstrap3 %}
+{% load static %}
 
 {% block content %}
+<style>
+    .fadeoverlay {
+        position: relative;
+    }
 
+    .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: .5s ease;
+        background-image: linear-gradient(rgba(245, 242, 242, 0.5), rgb(144, 144, 202));
+    }
+
+    .fadeoverlay:hover .overlay {
+        opacity: 1;
+    }
+
+    .img-responsive {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+</style>
 <div id="home">
     <div id="overlay" class="row">
         <div class="intro col-md-12 text-center ">
-            <h1 id="welcome_text">Welcome to Developers' Awwards</h1>
+            <h2 id="welcome_text">Welcome to Developers' Awwards</h2>
             <hr>
             <h3 id="description" style="margin-bottom: 5%;">Developers' Awwards is a place where you share you projects,
                 get reviews and ratings from other users.</h3>
             <a href=""> <input type="button" class="btn btn-info " value="Post Project"></a>
         </div>
+    </div>
+</div>
+<div class="container">
+
+    <h1 class='text-center' style="font-style: italic;">Posted Projects</h1>
+    <div class="container" style="margin-bottom: 10%;">
+        <hr />
+        {% for project in projects%}
+        <div class="col-lg-4">
+            <div
+                style="background-color: rgb(250, 246, 246);box-sizing: border-box; margin-top:5%;box-shadow: 0vh 0vh 1vh gainsboro;">
+                <div class="fadeoverlay">
+                    <a href="">
+                        <img src="{{project.image.url}}" class="img-responsive" alt="{{image.name}}"
+                            style="width:100%;width:100%">
+                        <div class="overlay">
+                        </div>
+                    </a>
+                </div>
+                <div class="row" style="padding-top: 5%">
+                    <div class="col-md-12">
+                        <p><a href="{{project.url}}" class="text-right" style="text-decoration: none;">
+                                {{project.title}} <img
+                                    src="https://img.icons8.com/color/48/000000/circled-up-right--v1.png"
+                                    style="width:15px;height:auto" />
+                            </a></p>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom: 5% ;font-size:10pt; color: green;">
+                    <div class="col-md-6" style="padding-bottom: 5%"> By: {{project.user.username}}</div>
+                    <div class="col-md-6">{{project.date|date:"M d, Y" }} </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
     </div>
 </div>
 <footer class="footer">
