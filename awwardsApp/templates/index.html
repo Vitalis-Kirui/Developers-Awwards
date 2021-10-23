@@ -1,5 +1,20 @@
 {%extends 'base.html'%}
+{% load bootstrap3 %}
 
 {% block content %}
-{{block.super}}
+
+<div id="home">
+    <div id="overlay" class="row">
+        <div class="intro col-md-12 text-center ">
+            <h2 id="welcome_text">Welcome to Developers' Awwards</h2>
+            <hr>
+            <h3 id="description" style="margin-bottom: 5%;">Developers' Awwards is a place where you share you projects,
+                get reviews and ratings from other users.</h3>
+            <a href=""> <input type="button" class="btn btn-info " value="Post Project"></a>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <p class="text-center">© Kipyegon Kirui Vitalis. All Rights Reserved</p>
+</footer>
 {% endblock %}

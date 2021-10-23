@@ -12,9 +12,15 @@
     <title> Developers' Awwards </title>
     {% endif %}
 
+    {% block styles %}
+    {% bootstrap_css %}
+    {% endblock %}
+
 </head>
 
 <body>
+
+    {% include "navbar.html" %}
 
     {% block content %}
 
