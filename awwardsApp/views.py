@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http  import HttpResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from .models import Profile, Project, Rates
 from django.contrib.auth.models import User
 from awwardsApp.forms import ProjectForm,RatingsForm,SignUpForm, UpdateProfileForm, UpdateUserForm
@@ -81,7 +81,7 @@ def post_project(request):
 def project(request, id):
     project = Project.objects.get(id=id)
     reviews = Rates.objects.all()
-    return render(request, 'viewProject.html', {"project": project, "reviews": reviews})
+    return render(request, 'view-project.html', {"project": project, "reviews": reviews})
 
 @login_required(login_url='/accounts/login')
 def view_project(request, id):
@@ -109,7 +109,7 @@ def view_project(request, id):
             review.average = (
                 review.design + review.usability + review.content)/3
             review.save()
-            return HttpResponseRedirect(reverse('viewProject', args=(project.id,)))
+            return HttpResponseRedirect(reverse('view_project', args=(project.id,)))
     else:
         form = RatingsForm()
     params = {
@@ -120,4 +120,4 @@ def view_project(request, id):
         'ratings': rate
 
     }
-    return render(request, 'viewProject.html', params)
+    return render(request, 'view-project.html', params)

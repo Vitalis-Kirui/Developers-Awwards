@@ -52,7 +52,7 @@
             <div
                 style="background-color: rgb(250, 246, 246);box-sizing: border-box; margin-top:5%;box-shadow: 0vh 0vh 1vh gainsboro;">
                 <div class="fadeoverlay">
-                    <a href="">
+                    <a href="{% url 'view_project' id=project.id %}">
                         <img src="{{project.image.url}}" class="img-responsive" alt="{{image.name}}"
                             style="width:100%;width:100%">
                         <div class="overlay">
