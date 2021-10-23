@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http  import HttpResponse
 from .models import Profile, Project, Rates
 from django.contrib.auth.models import User
-from awwardsApp.forms import SignUpForm, UpdateProfileForm, UpdateUserForm
+from awwardsApp.forms import ProjectForm,SignUpForm, UpdateProfileForm, UpdateUserForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
