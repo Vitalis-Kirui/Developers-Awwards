@@ -10,7 +10,7 @@ A Django application that allows users to share their projects and recieve ratin
 
 ## Live Link
 
-[View Site]()
+[View Site](https://vitalis-awwards.herokuapp.com/)
 
 ## User Story
 
@@ -23,8 +23,8 @@ A Django application that allows users to share their projects and recieve ratin
 
 ## API Endpoints
 
-* [Profiles Endpoints]()
-* [Projects Endpoints]()
+* [Profiles Endpoints](https://vitalis-awwards.herokuapp.com/api/v1/profile)
+* [Projects Endpoints](https://vitalis-awwards.herokuapp.com/api/v1/projects)
 
 ## Prerequisites
 
