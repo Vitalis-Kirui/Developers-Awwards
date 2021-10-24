@@ -60,16 +60,16 @@ def profile(request):
 
 @login_required(login_url='/accounts/login/')
 def update_profile(request, id):
-    obj = get_object_or_404(Profile, user_id=id)
-    obj2 = get_object_or_404(User, id=id)
-    form = UpdateProfileForm(request.POST or None, request.FILES, instance=obj)
-    form2 = UpdateUserForm(request.POST or None, instance=obj2)
-    if form.is_valid() and form2.is_valid():
-        form.save()
-        form2.save()
+    profile_object = get_object_or_404(Profile, user_id=id)
+    user_object = get_object_or_404(User, id=id)
+    profile_form = UpdateProfileForm(request.POST or None, request.FILES, instance=profile_object)
+    user_form = UpdateUserForm(request.POST or None, instance=user_object)
+    if profile_form.is_valid() and user_form.is_valid():
+        profile_form.save()
+        user_form.save()
         return HttpResponseRedirect("/profile")
 
-    return render(request, "registration/update_profile.html", {"form": form, "form2": form2})
+    return render(request, "registration/update_profile.html", {"form": profile_form, "form2": user_form})
 
 @login_required(login_url='/accounts/login')
 def post_project(request):
